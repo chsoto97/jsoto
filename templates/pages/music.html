@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Music — {{ project_name }}{% endblock %}
+
+{% block content %}
+<article class="page">
+  <header class="page-head">
+    <p class="page-head__eyebrow">Listen</p>
+    <h1 class="page-head__title">Music</h1>
+    <p class="page-head__lede">Sets and tracks on YouTube, SoundCloud, and Mixcloud.</p>
+  </header>
+  <div class="page-body page-body--stack">
+
+    {% if youtube_embed_src %}
+    <section class="card card--media">
+      <h2 class="card__title">YouTube — {{ youtube_set_title }}</h2>
+      <div class="youtube-embed-wrap">
+        <iframe
+          title="YouTube — {{ youtube_set_title }} — {{ project_name }}"
+          src="{{ youtube_embed_src }}"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <p class="embed-fallback"><a class="link-accent" href="{{ youtube_set_url }}" rel="noopener noreferrer" target="_blank">Open on YouTube</a></p>
+    </section>
+    {% endif %}
+
+    {% if soundcloud_embed_src %}
+    <section class="card">
+      <h2 class="card__title">SoundCloud</h2>
+      <div class="embed-shell soundcloud-embed">
+        <iframe
+          title="SoundCloud player — {{ project_name }}"
+          width="100%"
+          height="166"
+          loading="lazy"
+          allow="autoplay"
+          src="{{ soundcloud_embed_src }}"></iframe>
+      </div>
+      <p class="embed-fallback"><a class="link-accent" href="{{ soundcloud_stream_url }}" rel="noopener noreferrer" target="_blank">Open on SoundCloud</a></p>
+    </section>
+    {% elif soundcloud_url %}
+    <p><a class="btn" href="{{ soundcloud_url }}" rel="noopener noreferrer" target="_blank">SoundCloud</a></p>
+    {% endif %}
+
+    {% if mixcloud_embed_src %}
+    <section class="card card--compact">
+      <h2 class="card__title">Mixcloud</h2>
+      <div class="mixcloud-embed-wrap">
+        <iframe
+          title="Mixcloud player — {{ project_name }}"
+          width="100%"
+          height="80"
+          loading="lazy"
+          allow="autoplay"
+          src="{{ mixcloud_embed_src }}"></iframe>
+      </div>
+      <p class="embed-fallback embed-fallback--tight"><a class="link-accent" href="{{ mixcloud_url }}" rel="noopener noreferrer" target="_blank">Open on Mixcloud</a></p>
+    </section>
+    {% elif mixcloud_url %}
+    <p><a class="btn btn-secondary" href="{{ mixcloud_url }}" rel="noopener noreferrer" target="_blank">Mixcloud</a></p>
+    {% endif %}
+
+    {% if footer_links %}
+    <section class="card card--flat">
+      <h2 class="card__title">Elsewhere</h2>
+      <nav class="chip-row" aria-label="Social links">
+        {% for link in footer_links %}
+        <a class="chip" href="{{ link.url }}" rel="noopener noreferrer" target="_blank">{{ link.label }}</a>
+        {% endfor %}
+      </nav>
+    </section>
+    {% endif %}
+
+  </div>
+</article>
+{% endblock %}

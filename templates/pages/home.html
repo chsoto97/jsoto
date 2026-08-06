@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="home-hero" aria-labelledby="landing-title">
+  <div class="landing">
+    <img
+      id="landing-title"
+      class="home-hero__logo"
+      src="{% static logo_full %}"
+      alt="{{ project_name }}"
+      width="360"
+      height="99"
+      decoding="async"
+      fetchpriority="high">
+    <p class="landing-tagline">{{ landing_tagline }}</p>
+  </div>
+  {% if gallery_preview %}
+  <div class="landing-gallery" aria-label="Portrait photos">
+    <div class="landing-gallery-grid">
+      {% for name in gallery_preview %}
+      {% with 'gallery/'|add:name as rel %}
+      <a class="landing-gallery-item" href="{% url 'photos' %}">
+        <img src="{% static rel %}" alt="" loading="lazy" decoding="async" width="800" height="1200">
+      </a>
+      {% endwith %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

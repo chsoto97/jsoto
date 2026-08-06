@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#122a30">
+  <title>{% block title %}{{ project_name }}{% endblock %}</title>
+  <link rel="icon" href="{% static logo_mark %}" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="{% url 'home' %}">
+        <img
+          class="brand__logo"
+          src="{% static logo_mark %}"
+          alt="{{ project_name }}"
+          width="40"
+          height="40"
+          decoding="async">
+      </a>
+      <nav class="nav" aria-label="Primary">
+        {% with path=request.path %}
+        <a href="{% url 'home' %}" class="nav__link{% if path == '/' %} is-active{% endif %}">Home</a>
+        <a href="{% url 'bio' %}" class="nav__link{% if path == '/bio/' %} is-active{% endif %}">Bio</a>
+        <a href="{% url 'music' %}" class="nav__link{% if path == '/music/' %} is-active{% endif %}">Music</a>
+        <a href="{% url 'photos' %}" class="nav__link{% if path == '/photos/' %} is-active{% endif %}">Gallery</a>
+        <a href="{% url 'contact' %}" class="nav__link{% if path == '/contact/' %} is-active{% endif %}">Contact</a>
+        {% endwith %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    {% if messages %}
+    <ul class="messages" role="status">
+      {% for message in messages %}
+      <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <a class="footer-brand" href="{% url 'home' %}">
+        <img
+          class="footer-brand__logo"
+          src="{% static logo_footer %}"
+          alt="{{ project_name }}"
+          width="140"
+          height="33"
+          loading="lazy"
+          decoding="async">
+      </a>
+      {% if footer_links %}
+      <nav class="footer-nav" aria-label="Social links">
+        {% for link in footer_links %}
+        <a class="chip" href="{{ link.url }}" rel="noopener noreferrer" target="_blank">{{ link.label }}</a>
+        {% endfor %}
+      </nav>
+      {% endif %}
+      <p class="footer-copy">&copy; {% now "Y" %} {{ project_name }}</p>
+    </div>
+  </footer>
+</body>
+</html>

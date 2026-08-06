@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Contact — {{ project_name }}{% endblock %}
+
+{% block content %}
+<article class="page">
+  <header class="page-head">
+    <p class="page-head__eyebrow">Get in touch</p>
+    <h1 class="page-head__title">Contact</h1>
+  </header>
+  <div class="page-body">
+    {% if instagram_url %}
+    <div class="card card--accent">
+      <p class="contact-blurb">For inquiries or bookings, send a DM on <a class="link-accent" href="{{ instagram_url }}" rel="noopener noreferrer" target="_blank">Instagram</a>.</p>
+    </div>
+    {% else %}
+    <p class="muted">Add <code>SOCIAL_INSTAGRAM</code> in your environment or <code>config/settings.py</code>.</p>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

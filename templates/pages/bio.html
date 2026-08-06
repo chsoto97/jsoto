@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Bio — {{ project_name }}{% endblock %}
+
+{% block content %}
+<article class="page">
+  <header class="page-head">
+    <p class="page-head__eyebrow">About</p>
+    <h1 class="page-head__title">Bio</h1>
+  </header>
+  <div class="page-body bio">{{ bio_text|safe }}</div>
+</article>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gallery — {{ project_name }}{% endblock %}
+
+{% block content %}
+<article class="page page--wide">
+  <header class="page-head">
+    <p class="page-head__eyebrow">Visuals</p>
+    <h1 class="page-head__title">Gallery</h1>
+  </header>
+  <div class="page-body">
+    {% if gallery_images %}
+    <div class="gallery">
+      {% for name in gallery_images %}
+      {% with 'gallery/'|add:name as rel %}
+      <figure class="gallery-item">
+        <img src="{% static rel %}" alt="" loading="lazy" decoding="async" width="1200" height="800">
+      </figure>
+      {% endwith %}
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="muted">No gallery photos yet. Add wide images to <code>static/gallery/</code>.</p>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}
