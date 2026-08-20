@@ -16,17 +16,58 @@
     <p class="landing-tagline">{{ landing_tagline }}</p>
   </div>
   {% if gallery_preview %}
-  <div class="landing-gallery" aria-label="Portrait photos">
-    <div class="landing-gallery-grid">
+  <div
+    class="home-slideshow"
+    data-slideshow
+    data-interval="4500"
+    aria-roledescription="carousel"
+    aria-label="Photo slideshow">
+    <div class="home-slideshow__viewport">
       {% for name in gallery_preview %}
       {% with 'gallery/'|add:name as rel %}
-      <a class="landing-gallery-item" href="{% url 'photos' %}">
-        <img src="{% static rel %}" alt="" loading="lazy" decoding="async" width="800" height="1200">
-      </a>
+      <figure
+        class="home-slideshow__slide{% if forloop.first %} is-active{% endif %}"
+        data-slide
+        {% if not forloop.first %}aria-hidden="true"{% endif %}>
+        <img
+          src="{% static rel %}"
+          alt=""
+          {% if forloop.first %}fetchpriority="high"{% else %}loading="lazy"{% endif %}
+          decoding="async"
+          width="800"
+          height="1200">
+      </figure>
       {% endwith %}
       {% endfor %}
     </div>
+    {% if gallery_preview|length > 1 %}
+    <div class="home-slideshow__controls">
+      <button type="button" class="home-slideshow__btn" data-slideshow-prev aria-label="Previous photo">
+        <span aria-hidden="true">‹</span>
+      </button>
+      <div class="home-slideshow__dots" role="tablist" aria-label="Slides">
+        {% for name in gallery_preview %}
+        <button
+          type="button"
+          class="home-slideshow__dot{% if forloop.first %} is-active{% endif %}"
+          data-slideshow-dot
+          aria-label="Show photo {{ forloop.counter }}"
+          {% if forloop.first %}aria-current="true"{% endif %}></button>
+        {% endfor %}
+      </div>
+      <button type="button" class="home-slideshow__btn" data-slideshow-next aria-label="Next photo">
+        <span aria-hidden="true">›</span>
+      </button>
+    </div>
+    {% endif %}
+    <p class="home-slideshow__link">
+      <a class="link-accent" href="{% url 'photos' %}">View gallery</a>
+    </p>
   </div>
   {% endif %}
 </section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home-slideshow.js' %}" defer></script>
 {% endblock %}

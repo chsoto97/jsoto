@@ -96,8 +96,8 @@ def music(request):
 
 
 def photos(request):
-    landscape, _portrait = _split_landscape_portrait()
-    gallery_images = [n for n in landscape if not _is_home_only_filename(n)]
+    # All gallery images except those forced home-only (e.g. IMG_5590.JPG).
+    gallery_images = [n for n in _gallery_filenames() if not _is_home_only_filename(n)]
     return render(
         request,
         "pages/photos.html",
